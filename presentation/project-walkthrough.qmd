@@ -1,0 +1,54 @@
+---
+title: "Tracing Hidden Structure in Leukemia Gene Expression"
+subtitle: "A compact, reproducible walkthrough of Ward hierarchical clustering"
+format:
+  html:
+    toc: true
+    code-fold: true
+---
+
+## The question
+
+Can leukemia samples recover meaningful biological structure when the clustering algorithm never sees their ALL/AML labels?
+
+This project treats hierarchical clustering as an exploratory lens. The labels are hidden during model construction and added only afterwards to interpret the tree.
+
+## The analysis recipe
+
+```{r}
+expr_clean <- read.csv("../data/leukemia_train_cleaned.csv", check.names = FALSE)
+expr_mat <- expr_clean[, !(names(expr_clean) %in% c("patient", "cancer"))]
+expr_mat <- data.frame(lapply(expr_mat, as.numeric), check.names = FALSE)
+rownames(expr_mat) <- paste0("P", expr_clean$patient, "_", expr_clean$cancer)
+
+gene_variance <- apply(expr_mat, 2, var, na.rm = TRUE)
+top_genes <- names(sort(gene_variance, decreasing = TRUE))[1:100]
+expr_scaled <- scale(expr_mat[, top_genes])
+
+hc_samples <- hclust(dist(expr_scaled, method = "euclidean"), method = "ward.D2")
+cluster_assign <- cutree(hc_samples, k = 2)
+```
+
+## The tree
+
+![](../figures/leukemia-dendrogram.png)
+
+The two largest branches are strongly associated with the known leukemia labels, despite the labels not being used to build the tree.
+
+## The expression landscape
+
+![](../figures/leukemia-heatmap.png)
+
+The heatmap shows standardised values for the 100 most variable genes. Blocks of warmer and cooler colour reveal expression patterns that help drive the sample hierarchy.
+
+## Post-hoc label audit
+
+```{r}
+table(Cluster = cluster_assign, Cancer = expr_clean$cancer)
+```
+
+One cluster contains 27 ALL and 1 AML sample; the other contains 10 AML samples. The resulting 37/38 agreement is a descriptive concordance check, not supervised accuracy.
+
+## Takeaway
+
+The experiment shows how an unsupervised method can expose meaningful molecular structure. It also shows why visual separation must be interpreted cautiously: the cohort is small, the result depends on preprocessing choices, and no external clinical validation is attempted.

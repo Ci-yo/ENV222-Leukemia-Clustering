@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-labelledby="title desc">
+  <title id="title">Tracing hidden structure in leukemia gene expression</title>
+  <desc id="desc">A dark scientific banner showing gene expression bars flowing into a branching dendrogram.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071A2B"/>
+      <stop offset="0.58" stop-color="#102B46"/>
+      <stop offset="1" stop-color="#1A1438"/>
+    </linearGradient>
+    <linearGradient id="signal" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#28D7C0"/>
+      <stop offset="0.55" stop-color="#4EA5FF"/>
+      <stop offset="1" stop-color="#FF6577"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1280" height="360" rx="28" fill="url(#bg)"/>
+  <circle cx="1050" cy="60" r="150" fill="#6339A8" opacity="0.12"/>
+  <circle cx="1180" cy="310" r="190" fill="#2DD4BF" opacity="0.07"/>
+  <g opacity="0.16" stroke="#9CC9ED">
+    <path d="M0 72H1280M0 144H1280M0 216H1280M0 288H1280"/>
+    <path d="M128 0V360M256 0V360M384 0V360M512 0V360M640 0V360M768 0V360M896 0V360M1024 0V360M1152 0V360"/>
+  </g>
+  <g transform="translate(70 73)">
+    <text x="0" y="22" fill="#58E6CF" font-family="Segoe UI,Arial,sans-serif" font-size="17" font-weight="700" letter-spacing="4">ENV222 · UNSUPERVISED DISCOVERY</text>
+    <text x="0" y="86" fill="#FFFFFF" font-family="Segoe UI,Arial,sans-serif" font-size="50" font-weight="750">Tracing hidden structure</text>
+    <text x="0" y="140" fill="#D7E8F5" font-family="Segoe UI,Arial,sans-serif" font-size="35" font-weight="350">in leukemia gene expression</text>
+    <rect x="0" y="174" width="470" height="3" rx="2" fill="url(#signal)"/>
+    <text x="0" y="214" fill="#9FC0D8" font-family="Segoe UI,Arial,sans-serif" font-size="18">38 SAMPLES  ·  7,129 FEATURES  ·  100 SIGNALS  ·  ONE TREE</text>
+  </g>
+  <g transform="translate(820 62)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <g opacity="0.8" stroke="url(#signal)" stroke-width="4" filter="url(#glow)">
+      <path d="M58 224V184H116V148H188V110H300V54"/>
+      <path d="M116 184H160V210H210V244"/>
+      <path d="M188 148H242V178H282V218"/>
+      <path d="M300 110H340V146H378V198"/>
+    </g>
+    <g stroke-width="8">
+      <path d="M58 230v31M105 230v31M160 230v31M210 250v11M258 230v31" stroke="#4EA5FF"/>
+      <path d="M302 230v31M340 230v31M378 206v55" stroke="#FF6577"/>
+    </g>
+    <g fill="#CDE6F7" stroke="none" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="700">
+      <text x="49" y="286">ALL</text><text x="326" y="286">AML</text>
+    </g>
+  </g>
+</svg>

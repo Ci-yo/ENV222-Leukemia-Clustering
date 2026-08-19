@@ -1,0 +1,22 @@
+.RData
+.Rhistory
+.Rproj.user/
+*.Rproj
+
+# Local render products
+*_files/
+*.utf8.md
+/.quarto/
+/_site/
+
+# Source coursework, drafts and archives
+*.docx
+*.pdf
+*.pptx
+*.zip
+*.m4a
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/

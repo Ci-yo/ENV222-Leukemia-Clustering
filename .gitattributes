@@ -1,0 +1,11 @@
+* text=auto
+*.R text eol=lf
+*.Rmd text eol=lf
+*.qmd text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.csv text eol=lf
+*.svg text eol=lf
+*.png binary
+*.mp3 binary
