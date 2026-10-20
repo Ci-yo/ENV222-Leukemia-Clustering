@@ -15,6 +15,78 @@
 > [!IMPORTANT]
 > This is an exploratory, educational analysis of a public gene-expression dataset. The clustering is not a diagnostic model and must not be used for clinical decisions.
 
+## Step-by-step guide
+
+### 1. Prepare your computer and get the files
+
+Use [R](https://cran.r-project.org/) (R 4.4 or later recommended).
+RStudio is optional. Check `Rscript --version` in your terminal. Install [Git](https://git-scm.com/downloads) to use the commands below.
+Run them in a **terminal** (PowerShell on Windows; Terminal on macOS/Linux):
+
+```bash
+git clone https://github.com/Ci-yo/ENV222-Leukemia-Clustering.git
+cd ENV222-Leukemia-Clustering
+```
+
+Alternatively, use **Code → Download ZIP**, extract it, and open a terminal in
+the extracted folder. All commands below start in the folder containing
+`README.md`. A second run replaces the generated outputs named below.
+
+### 2. Install the heatmap package
+
+```bash
+Rscript requirements.R
+```
+
+The installer adds `pheatmap`. The included
+[`data/leukemia_train_cleaned.csv`](data/leukemia_train_cleaned.csv) has 38 rows:
+`patient`, `cancer` and 7,129 expression features. `cancer` is used only to
+interpret the completed clustering, not to calculate the distance matrix.
+
+### 3. Run the clustering
+
+```bash
+Rscript scripts/reproduce_analysis.R
+```
+
+The script selects the 100 highest-variance features, standardises them,
+computes Euclidean distances and applies `ward.D2` linkage.
+Expected final message:
+
+```text
+Analysis complete: 37 of 38 samples align with cluster majority labels.
+```
+
+For a table-only run that does not need `pheatmap`, use
+`Rscript scripts/reproduce_analysis.R --check-only`. This option **still
+writes result tables**; it skips figure generation.
+
+### 4. Inspect the results and validate
+
+| Output | Meaning |
+|---|---|
+| [`results/cluster_composition.csv`](results/cluster_composition.csv) | Cluster 1: 27 ALL + 1 AML; cluster 2: 0 ALL + 10 AML. |
+| [`results/analysis_summary.csv`](results/analysis_summary.csv) | Input dimensions, selected genes, distance/linkage and post-hoc agreement. |
+| [`results/top_variable_genes.csv`](results/top_variable_genes.csv) | The 100 selected features and their variances. |
+| [`figures/leukemia-dendrogram.png`](figures/leukemia-dendrogram.png) | Sample relationships with labels added for interpretation. |
+| [`figures/leukemia-heatmap.png`](figures/leukemia-heatmap.png) | Standardised expression patterns. |
+
+```bash
+Rscript scripts/validate_repository.R
+```
+
+The 37/38 agreement is descriptive concordance after clustering, not
+held-out predictive accuracy.
+
+### 5. Troubleshooting
+
+| Symptom | Action |
+|---|---|
+| `Rscript` is not recognised | Add the R installation's `bin` folder to PATH, then open a new terminal. |
+| An input file cannot be found | Return to the repository root; keep the checked-in folder structure. |
+| The heatmap is unchanged but tables were written | Install `pheatmap` with `Rscript requirements.R`, then rerun without `--check-only`. |
+| You want to cluster a different dataset | Adapt the schema and the explicit 38-row/7,131-column checks first; the script and validator target this archived dataset. |
+
 ## The project in 30 seconds
 
 | The question | The experiment | The signal | The caution |
@@ -65,16 +137,6 @@ The choice is still an analytical assumption. Different gene-selection rules, di
 - [Inspect the complete R analysis](scripts/reproduce_analysis.R)
 - [Review the tidy result tables](results/)
 - [Read the data provenance note](data/README.md)
-
-## Reproduce it
-
-```bash
-Rscript requirements.R
-Rscript scripts/reproduce_analysis.R
-Rscript scripts/validate_repository.R
-```
-
-The first command installs `pheatmap`. The analysis script rebuilds the two figures and result tables; the validator independently checks the dataset dimensions, label counts, cluster composition, privacy guard and repository structure.
 
 ## Repository map
 
